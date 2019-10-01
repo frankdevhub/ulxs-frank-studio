@@ -1,6 +1,6 @@
 package com.ulxsfrank.business.data.rest.result;
 
-public class SingleResult<T> extends MytResult {
+public class SingleResult<T> extends Result {
 	/**
 	 * @author fangchensheng
 	 * @date 2018年3月12日

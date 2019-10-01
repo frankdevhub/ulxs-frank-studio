@@ -1,6 +1,6 @@
 package com.ulxsfrank.business.data.rest.result;
 
-public class MytResult {
+public class Result {
 
 	private String message;
 	private String status;

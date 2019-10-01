@@ -2,7 +2,7 @@ package com.ulxsfrank.business.data.rest.result;
 
 import com.github.pagehelper.PageInfo;
 
-public class PageResult<T> extends MytResult {
+public class PageResult<T> extends Result {
 
 	private PageInfo<T> data;
 

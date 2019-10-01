@@ -96,7 +96,6 @@ public class WebPageController {
     public Response<Boolean> feedBackMail(@Validated @RequestBody FeedBackEntity feedBackEntity, HttpServletRequest request) {
         try {
             String ip = CommonInterceptor.getRealIp(request);
-            ip = "58.25.39.253";
             Assert.notNull(ip);
             //create feedback mail log
             MailActionLogEntity mailLog = new MailActionLogEntity();

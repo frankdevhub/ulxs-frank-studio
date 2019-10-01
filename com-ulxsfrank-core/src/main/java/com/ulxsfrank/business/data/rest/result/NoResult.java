@@ -1,6 +1,6 @@
 package com.ulxsfrank.business.data.rest.result;
 
-public class NoResult extends MytResult {
+public class NoResult extends Result {
 
 	private Boolean result;
 

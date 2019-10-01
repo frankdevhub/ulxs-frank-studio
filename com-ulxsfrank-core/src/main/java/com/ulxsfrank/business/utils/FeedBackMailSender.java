@@ -62,8 +62,7 @@ public class FeedBackMailSender {
         return this;
     }
 
-
-    public void sendTemplateMail(String templateMessage) throws MessagingException {
+	public void sendTemplateMail(String templateMessage) throws MessagingException {
         JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
         senderImpl.setHost("smtp.exmail.qq.com");
         Properties prop = new Properties();
@@ -73,13 +72,13 @@ public class FeedBackMailSender {
         prop.setProperty("mail.smtp.port", "465");
         prop.setProperty("mail.smtp.socketFactory.port", "465");
         senderImpl.setJavaMailProperties(prop);
-        senderImpl.setUsername("service@meixiangtech.site");
-        senderImpl.setPassword("Fxmf7fafcc0806");
+        senderImpl.setUsername("");
+        senderImpl.setPassword("");
 
         MimeMessage mimeMessage = senderImpl.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         messageHelper.setFrom("service@meixiangtech.site");
-        messageHelper.setTo(new String[]{"franklinfang@meixiangtech.site", "13801863985@139.com"});
+        messageHelper.setTo(new String[]{"", ""});
         messageHelper.setSubject(String.format("New Contact Request From Official Web Page-[%s]", new Date().getTime()));
         messageHelper.setText(templateMessage, true);
         senderImpl.send(mimeMessage);
