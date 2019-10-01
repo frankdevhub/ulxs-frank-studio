@@ -1,20 +1,18 @@
 package com.ulxsfrank.business.controller;
 
-import com.ulxsfrank.business.data.Constants;
-import com.ulxsfrank.business.data.logging.Logger;
-import com.ulxsfrank.business.data.logging.LoggerFactory;
-import com.ulxsfrank.business.exception.NoSuchPermissionException;
-import com.ulxsfrank.business.message.MessageMethod;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
+import com.ulxsfrank.business.data.Constants;
+import com.ulxsfrank.business.data.logging.Logger;
+import com.ulxsfrank.business.data.logging.LoggerFactory;
+import com.ulxsfrank.business.exception.NoSuchPermissionException;
+import com.ulxsfrank.business.message.MessageMethod;
 
 /**
  * <p>Title:@ClassName CommonInterceptor.java</p>
