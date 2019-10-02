@@ -23,6 +23,7 @@ public class Constants {
 
 	public static final String WX_APP_ID = "wxdb1109fa181ce203";
 	public static final String WX_APP_SECRET = "4b3e8214410634b49e663e8d130d36ff";
-	public static final String WX_MCH_ID = "";
+	public static final String WX_MCH_ID = "1556645941";
+	public static final String WX_PATERNER_KEY = "G32n783NYfruf485M34uh9fWcdIufQ34";
 	public static final String WX_GRANT_TYPE = "authorization_code";
 }
