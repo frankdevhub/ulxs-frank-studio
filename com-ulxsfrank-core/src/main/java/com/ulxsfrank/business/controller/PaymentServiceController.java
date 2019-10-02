@@ -1,9 +1,15 @@
 package com.ulxsfrank.business.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -15,7 +21,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
-import com.ulxsfrank.business.configuration.SnowFlakeGenerator;
 import com.ulxsfrank.business.configuration.SnowFlakeIdWorker;
 import com.ulxsfrank.business.data.Constants;
 import com.ulxsfrank.business.data.logging.Logger;
@@ -66,7 +71,7 @@ public class PaymentServiceController {
 		paraMap.put("total_fee", "1");
 
 		paraMap.put("trade_type", "JSAPI");
-		paraMap.put("notify_url", "www.jilu-samplestudio.com/payment/callback");
+		paraMap.put("notify_url", "jilu-samplestudio.com/payment/callback");
 		String sign = WXPayUtil.generateSignature(paraMap, Constants.WX_PATERNER_KEY);
 		System.out.println(String.format("generate sign as:[%s]", sign));
 
@@ -152,13 +157,32 @@ public class PaymentServiceController {
 
 			Map<String, String> tokenResponseMap = getWxAccessToken(code);
 			Map<String, String> signResponseMap = getSignature(tokenResponseMap);
-			// Map<String, String> orderResponseMap =
-			// postOrderRequest(signResponseMap);
+			Map<String, String> orderResponseMap = postOrderRequest(signResponseMap);
 
 			return new Response<Map<String, String>>().setData(null).setMessage("success").success();
 		} catch (Exception e) {
 			return new Response<Map<String, String>>().setData(null).setMessage(e.getMessage()).failed();
 		}
+	}
+
+	@RequestMapping(value = "/callback", method = RequestMethod.POST)
+	public Response<Boolean> callBackPayService(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			LOGGER.begin().headerAction(MessageMethod.GET).info("start prepay callback.");
+			InputStream is = request.getInputStream();
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(is, writer, "UTF-8");
+			String xml = writer.toString();
+
+			Map<String, String> notifyMap = WXPayUtil.xmlToMap(xml);
+			response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code></xml>");
+			is.close();
+			return new Response<Boolean>().setData(Boolean.TRUE).setMessage("success").success();
+
+		} catch (Exception e) {
+			return new Response<Boolean>().setData(Boolean.FALSE).setMessage(e.getMessage()).failed();
+		}
+
 	}
 
 }
