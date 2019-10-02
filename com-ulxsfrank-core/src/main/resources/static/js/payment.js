@@ -14,13 +14,12 @@
   	if(code){
   		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"";
   	  	$.post(url,function(result) {
-    			appId = result.appid;
-  	  			console.log("appId", appId);
-  				timeStamp = result.timeStamp;
-  				nonceStr = result.nonceStr;
-  				package = result.package;
-  				signType = result.signType;
-  				paySign = result.paySign;
+    			appId = result.data.appid;
+  				timeStamp = result.data.timeStamp;
+  				nonceStr = result.data.nonceStr;
+  				package = result.data.package;
+  				signType = result.data.signType;
+  				paySign = result.data.paySign;
   				
   				if (typeof WeixinJSBridge == "undefined") {
   					if (document.addEventListener) {
