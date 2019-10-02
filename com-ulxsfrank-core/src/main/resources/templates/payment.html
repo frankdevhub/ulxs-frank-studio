@@ -10,8 +10,8 @@
 
    <script type="text/javascript">
    var appId,timeStamp,nonceStr,package,signType,paySign;  
-   function pay(){
-  	var code = $("#code").attr("code");
+   function do_payment(){
+  	var code = $("#pay_btn").attr("code");
   	console.log("code",code);
   	if(code){
   		var url = "http://127.0.0.1/payment/order?code="+code+";
