@@ -1,67 +1,13 @@
 <html>
 <head>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="/js/payment.js" type="text/javascript"></script>
 <title>Payment</title>
 </head>
 <body>
-  <input type="button" name="pay_btn" id="pay_btn" onclick="do_payment()" code="${param.code }">
+  <input type="button" value="�뽻Ǯ" name="pay_btn" id="pay_btn" onclick="do_payment();"/>
 
-   <script type="text/javascript">
-   var appId,timeStamp,nonceStr,package,signType,paySign;  
-   function do_payment(){
-  	var code = $("#pay_btn").attr("code");
-  	console.log("code",code);
-  	if(code){
-  		var url = "http://127.0.0.1/payment/order?code="+code+";
-  	  	$.get(url,function(result) {
-    			appId = result.appId;
-  				timeStamp = result.timeStamp;
-  				nonceStr = result.nonceStr;
-  				package = result.package;
-  				signType = result.signType;
-  				paySign = result.paySign;
-  				
-  				if (typeof WeixinJSBridge == "undefined") {
-  					if (document.addEventListener) {
-  						document.addEventListener('WeixinJSBridgeReady',
-  								onBridgeReady, false);
-  					} else if (document.attachEvent) {
-  						document.attachEvent('WeixinJSBridgeReady',
-  								onBridgeReady);
-  						document.attachEvent('onWeixinJSBridgeReady',
-  								onBridgeReady);
-  					}
-  				} else {
-  					onBridgeReady();
-  				}
-  			});
-  		} else {
-  			alert("server internal error.")
-  		}
-  	}
-  function onBridgeReady(){
-  	  WeixinJSBridge.invoke( 'getBrandWCPayRequest', {
-  		  "appId":appId,    
-            "timeStamp":timeStamp,        
-            "nonceStr":nonceStr,    
-            "package":package,     
-            "signType":signType,             
-            "paySign":paySign  
-           }, 
-           function(res){      
-        	   if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                   console.log('pay success.');
-               }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
-            	   console.log('pay canceled.');
-               }else if(res.err_msg == "get_brand_wcpay_request:fail"){
-            	   console.log('pay failure.');
-                   WeixinJSBridge.call('closeWindow');
-               } 
-     });   
-  }
 
-	</script>
 </body>
 </html>

@@ -158,7 +158,7 @@ public class PaymentServiceController {
 			Map<String, String> signResponseMap = getSignature(tokenResponseMap);
 			Map<String, String> orderResponseMap = postOrderRequest(signResponseMap);
 
-			return new Response<Map<String, String>>().setData(null).setMessage("success").success();
+			return new Response<Map<String, String>>().setData(orderResponseMap).setMessage("success").success();
 		} catch (Exception e) {
 			return new Response<Map<String, String>>().setData(null).setMessage(e.getMessage()).failed();
 		}
