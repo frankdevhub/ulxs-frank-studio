@@ -3,6 +3,7 @@ package com.ulxsfrank.business.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,7 +102,19 @@ public class PaymentServiceController {
 		if (resMap.get("prepay_id").equals(null))
 			throw new BusinessException("prepay_id cannot be null.");
 		paraMap.put("prepay_id", resMap.get("prepay_id"));
-		return paraMap;
+
+		Map<String, String> payMap = new HashMap<String, String>();
+		payMap.put("appid", Constants.WX_APP_ID);
+		payMap.put("timeStamp", new Date().getTime() + "");
+		payMap.put("nonceStr", WXPayUtil.generateNonceStr());
+		payMap.put("signType", "MD5");
+		payMap.put("package", "prepay_id=" + resMap.get("prepay_id"));
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);
+		System.out.println(String.format("generate sign as:[%s]", paySign));
+
+		payMap.put("paySign", paySign);
+
+		return payMap;
 	}
 
 	private Map<String, String> getWxAccessToken(String code)
