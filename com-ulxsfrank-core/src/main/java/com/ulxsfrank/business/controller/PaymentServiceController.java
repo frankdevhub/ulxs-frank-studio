@@ -84,14 +84,12 @@ public class PaymentServiceController {
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do postOrderRequest.");
 
 		String xml = WXPayUtil.mapToXml(paraMap);
-		StringEntity bodyEntity = new StringEntity(xml);
+		StringEntity bodyEntity = new StringEntity(xml, "UTF-8");
 		String unifiedorderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(unifiedorderUrl);
-		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).setConnectionRequestTimeout(5000)
-				.setSocketTimeout(5000).setRedirectsEnabled(true).build();
-		httpPost.setConfig(requestConfig);
+		httpPost.setHeader("Content-Type", "application/json");
 		httpPost.setEntity(bodyEntity);
 
 		CloseableHttpResponse response = httpClient.execute(httpPost);
@@ -99,6 +97,10 @@ public class PaymentServiceController {
 		String responseText = EntityUtils.toString(responseEntity);
 		System.out.println(String.format("response[pay_order_request]:[%s]", responseText));
 
+		Map<String, String> resMap = WXPayUtil.xmlToMap(responseText);
+		if (resMap.get("prepay_id").equals(null))
+			throw new BusinessException("prepay_id cannot be null.");
+		paraMap.put("prepay_id", resMap.get("prepay_id"));
 		return paraMap;
 	}
 
