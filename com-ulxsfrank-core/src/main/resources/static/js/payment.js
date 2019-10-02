@@ -9,12 +9,13 @@
    
    var appId,timeStamp,nonceStr,package,signType,paySign; 
    function do_payment(){
-  	var code = $("#pay_btn").attr("code");
+    var code = getQueryString("code");
   	console.log("code",code);
   	if(code){
   		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"";
-  	  	$.get(url,function(result) {
-    			appId = result.appId;
+  	  	$.post(url,function(result) {
+    			appId = result.appid;
+  	  			console.log("appId", appId);
   				timeStamp = result.timeStamp;
   				nonceStr = result.nonceStr;
   				package = result.package;
