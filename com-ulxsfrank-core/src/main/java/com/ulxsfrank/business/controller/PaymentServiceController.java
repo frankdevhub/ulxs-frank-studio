@@ -55,7 +55,6 @@ public class PaymentServiceController {
 
 	private Logger LOGGER = LoggerFactory.getLogger(PaymentServiceController.class);
 
-	@SuppressWarnings("deprecation")
 	private Map<String, String> getSignature(Map<String, String> map) throws Exception {
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do getSignature.");
 
@@ -76,7 +75,7 @@ public class PaymentServiceController {
 
 		paraMap.put("trade_type", "JSAPI");
 		paraMap.put("notify_url", "jilu-samplestudio.com/payment/callback");
-		String sign = WXPayUtil.generateSignature(paraMap, Constants.WX_PATERNER_KEY);
+		String sign = WXPayUtil.generateSignature(paraMap, Constants.WX_PATERNER_KEY, SignType.HMACSHA256);
 		System.out.println(String.format("generate sign as:[%s]", sign));
 
 		paraMap.put("sign", sign);
