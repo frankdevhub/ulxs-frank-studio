@@ -106,15 +106,18 @@ public class PaymentServiceController {
 			throw new BusinessException("prepay_id cannot be null.");
 
 		Map<String, String> payMap = new HashMap<String, String>();
-		payMap.put("appid", Constants.WX_APP_ID);
+
 		payMap.put("timeStamp", WXPayUtil.getCurrentTimestamp() + "");
+		System.out.println(String.format("timestamp:[%s]", WXPayUtil.getCurrentTimestamp()));
+
+		payMap.put("appid", Constants.WX_APP_ID);
 		payMap.put("nonceStr", WXPayUtil.generateNonceStr());
 		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + resMap.get("prepay_id"));
 		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
-		payMap.put("paySign", paySign);
+		payMap.put("paySign", "key=" + paySign);
 
 		return payMap;
 	}
