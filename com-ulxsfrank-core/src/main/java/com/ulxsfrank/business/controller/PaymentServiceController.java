@@ -3,15 +3,12 @@ package com.ulxsfrank.business.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.net.URLEncoder;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
@@ -31,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.github.wxpay.sdk.WXPayConstants.SignType;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.ulxsfrank.business.configuration.SnowFlakeIdWorker;
 import com.ulxsfrank.business.data.Constants;
@@ -70,12 +66,13 @@ public class PaymentServiceController {
 		paraMap.put("mch_id", Constants.WX_MCH_ID);
 		paraMap.put("nonce_str", wxNonceStr);
 		paraMap.put("out_trade_no", tradeNumber);
-		paraMap.put("spbill_create_ip", "58.34.44.32");
+		paraMap.put("spbill_create_ip", "218.79.178.76");// TODO
 		paraMap.put("total_fee", "1");
 
 		paraMap.put("trade_type", "JSAPI");
-		paraMap.put("notify_url", "jilu-samplestudio.com/payment/callback");
-		String sign = WXPayUtil.generateSignature(paraMap, Constants.WX_PATERNER_KEY, SignType.HMACSHA256);
+		paraMap.put("notify_url", "http://jilu-samplestudio.com/payment/callback");// TODO
+																					// jilu-samplestudio.com/payment/callback
+		String sign = WXPayUtil.generateSignature(paraMap, Constants.WX_PATERNER_KEY);
 		System.out.println(String.format("generate sign as:[%s]", sign));
 
 		paraMap.put("sign", sign);
@@ -118,9 +115,10 @@ public class PaymentServiceController {
 
 		payMap.put("appid", Constants.WX_APP_ID);
 		payMap.put("nonceStr", wxNonceStr);
-		payMap.put("signType", "HMAC-SHA256");
+		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + prepPayId);
-		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY, SignType.HMACSHA256);
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO
+																						// HMACSHA256
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
 		payMap.put("paySign", paySign);
