@@ -110,10 +110,16 @@ public class PaymentServiceController {
 		payMap.put("timeStamp", WXPayUtil.getCurrentTimestamp() + "");
 		System.out.println(String.format("timestamp:[%s]", WXPayUtil.getCurrentTimestamp()));
 
+		String wxNonceStr = WXPayUtil.generateNonceStr();
+		String prepPayId = resMap.get("prepay_id");
+
+		System.out.println(String.format("using wxnonce string:[%s]", wxNonceStr));
+		System.out.println(String.format("using prepay id:[%s]", prepPayId));
+
 		payMap.put("appid", Constants.WX_APP_ID);
-		payMap.put("nonceStr", WXPayUtil.generateNonceStr());
+		payMap.put("nonceStr", wxNonceStr);
 		payMap.put("signType", "MD5");
-		payMap.put("package", "prepay_id=" + resMap.get("prepay_id"));
+		payMap.put("package", "prepay_id=" + prepPayId);
 		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
