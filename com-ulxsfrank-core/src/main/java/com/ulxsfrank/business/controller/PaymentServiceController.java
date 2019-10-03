@@ -3,6 +3,7 @@ package com.ulxsfrank.business.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
@@ -52,6 +54,7 @@ public class PaymentServiceController {
 
 	private Logger LOGGER = LoggerFactory.getLogger(PaymentServiceController.class);
 
+	@SuppressWarnings("deprecation")
 	private Map<String, String> getSignature(Map<String, String> map) throws Exception {
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do getSignature.");
 
@@ -63,7 +66,7 @@ public class PaymentServiceController {
 		Map<String, String> paraMap = new HashMap<String, String>();
 		paraMap.put("appid", Constants.WX_APP_ID);
 		paraMap.put("openid", openId);
-		paraMap.put("body", "高级服装设计订单");
+		paraMap.put("body", "test-order");
 		paraMap.put("mch_id", Constants.WX_MCH_ID);
 		paraMap.put("nonce_str", wxNonceStr);
 		paraMap.put("out_trade_no", tradeNumber);
@@ -101,11 +104,10 @@ public class PaymentServiceController {
 		Map<String, String> resMap = WXPayUtil.xmlToMap(responseText);
 		if (resMap.get("prepay_id").equals(null))
 			throw new BusinessException("prepay_id cannot be null.");
-		paraMap.put("prepay_id", resMap.get("prepay_id"));
 
 		Map<String, String> payMap = new HashMap<String, String>();
 		payMap.put("appid", Constants.WX_APP_ID);
-		payMap.put("timeStamp", new Date().getTime() + "");
+		payMap.put("timeStamp", WXPayUtil.getCurrentTimestamp() + "");
 		payMap.put("nonceStr", WXPayUtil.generateNonceStr());
 		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + resMap.get("prepay_id"));
