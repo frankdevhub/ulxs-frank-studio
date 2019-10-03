@@ -123,7 +123,7 @@ public class PaymentServiceController {
 		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
-		payMap.put("paySign", "key=" + paySign);
+		payMap.put("paySign", paySign);
 
 		return payMap;
 	}
