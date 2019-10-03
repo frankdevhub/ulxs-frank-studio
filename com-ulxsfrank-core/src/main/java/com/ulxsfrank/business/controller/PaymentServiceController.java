@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.wxpay.sdk.WXPayConstants.SignType;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.ulxsfrank.business.configuration.SnowFlakeIdWorker;
 import com.ulxsfrank.business.data.Constants;
@@ -118,9 +119,9 @@ public class PaymentServiceController {
 
 		payMap.put("appid", Constants.WX_APP_ID);
 		payMap.put("nonceStr", wxNonceStr);
-		payMap.put("signType", "MD5");
+		payMap.put("signType", "HMACSHA256");
 		payMap.put("package", "prepay_id=" + prepPayId);
-		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY, SignType.HMACSHA256);
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
 		payMap.put("paySign", paySign);
