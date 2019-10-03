@@ -119,7 +119,7 @@ public class PaymentServiceController {
 
 		payMap.put("appid", Constants.WX_APP_ID);
 		payMap.put("nonceStr", wxNonceStr);
-		payMap.put("signType", "HMACSHA256");
+		payMap.put("signType", "HMAC-SHA256");
 		payMap.put("package", "prepay_id=" + prepPayId);
 		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY, SignType.HMACSHA256);
 		System.out.println(String.format("generate sign as:[%s]", paySign));
