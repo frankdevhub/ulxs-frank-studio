@@ -60,7 +60,7 @@ public class PaymentServiceController {
 		String tradeNumber = Long.toString(new SnowFlakeIdWorker().nextId());
 		System.out.println(String.format("using nonce string:[%s]", wxNonceStr));
 		Map<String, String> paraMap = new HashMap<String, String>();
-		paraMap.put("appid", Constants.WX_APP_ID);
+		paraMap.put("appId", Constants.WX_APP_ID);
 		paraMap.put("openid", openId);
 		paraMap.put("body", "test-order");
 		paraMap.put("mch_id", Constants.WX_MCH_ID);
@@ -113,14 +113,14 @@ public class PaymentServiceController {
 		System.out.println(String.format("using wxnonce string:[%s]", wxNonceStr));
 		System.out.println(String.format("using prepay id:[%s]", prepPayId));
 
-		payMap.put("appid", Constants.WX_APP_ID);
+		payMap.put("appId", Constants.WX_APP_ID);
 		payMap.put("nonceStr", wxNonceStr);
 		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + prepPayId);
-		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO
-																						// HMACSHA256
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO HMACSHA256
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
+		payMap.put("paypackage", "prepay_id=" + prepPayId);
 		payMap.put("paySign", paySign);
 
 		return payMap;

@@ -7,17 +7,17 @@
 		return null;
    }
    
-   var appId,timeStamp,nonceStr,package,signType,paySign; 
+   var appId,timeStamp,nonceStr,prepackage,signType,paySign; 
    function do_payment(){
     var code = getQueryString("code");
   	console.log("code",code);
   	if(code){
   		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"";
   	  	$.post(url,function(result) {
-    			appId = result.data.appid;
+    			appId = result.data.appId;
   				timeStamp = result.data.timeStamp;
   				nonceStr = result.data.nonceStr;
-  				package = result.data.package;
+  				prepackage = result.data.package;
   				signType = result.data.signType;
   				paySign = result.data.paySign;
   				
@@ -44,11 +44,12 @@
   		  "appId":appId,    
             "timeStamp":timeStamp,        
             "nonceStr":nonceStr,    
-            "package":package,     
+            "package":prepackage,     
             "signType":signType,             
             "paySign":paySign  
            }, 
-           function(res){      
+           function(res){
+           	   console.log(res.errMsg);
         	   if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                    console.log('pay success.');
                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
