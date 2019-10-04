@@ -1,4 +1,4 @@
-(
+
 $('.ui-choose').ui_choose();
 	var uc_01 = $('#uc_01').data('ui-choose'); 
 	uc_01.click = function(index, item) {
@@ -11,21 +11,21 @@ $('.ui-choose').ui_choose();
 		$('#uc_01 li:eq(3)').click(function() {
 			$('.tr_rechoth').show();
 			$('.tr_rechoth').find("input").attr('required', 'true')
-			$('.rechnum').text('10.00元');
+			$('.rechnum').text('1000.00元');
 		})
 		$('#uc_01 li:eq(0)').click(function() {
 			$('.tr_rechoth').hide();
-			$('.rechnum').text('10.00元');
+			$('.rechnum').text('1000.00元');
 			$('.othbox').val('');
 		})
 		$('#uc_01 li:eq(1)').click(function() {
 			$('.tr_rechoth').hide();
-			$('.rechnum').text('20.00元');
+			$('.rechnum').text('3000.00元');
 			$('.othbox').val('');
 		})
 		$('#uc_01 li:eq(2)').click(function() {
 			$('.tr_rechoth').hide();
-			$('.rechnum').text('50.00元');
+			$('.rechnum').text('5000.00元');
 			$('.othbox').val('');
 		})
 		$(document).ready(function() {
@@ -55,4 +55,3 @@ $('.ui-choose').ui_choose();
 			}
 		});
 	});
-);

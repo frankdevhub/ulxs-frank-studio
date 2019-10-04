@@ -407,3 +407,39 @@ ul.ui-choose.choose-flex>li {
 .am-form-group>label>span {
 	color: #999;
 }
+.icon-weipay{
+	background: url("/images/icon-weipay.png") no-repeat right;
+}
+.service-txt{
+	padding-left: 50px;
+    text-align: left;
+}
+.wx_contact{
+	display: inline-block;
+    position: relative;
+    margin: 0 25px;
+    list-style: none;
+}
+.footer-new .topArea .helpList {
+    overflow: hidden;
+    text-align: center;
+    font-size: 0;
+}
+.clearfix, ul {
+    zoom: 1;
+}
+
+li, ol, ul {
+    list-style: none;
+}
+
+body{
+  max-width: 100%;
+  overflow: hidden;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}

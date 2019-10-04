@@ -51,7 +51,7 @@ public class PaymentServiceController {
 
 	private Logger LOGGER = LoggerFactory.getLogger(PaymentServiceController.class);
 
-	private Map<String, String> getSignature(Map<String, String> map) throws Exception {
+	private Map<String, String> getSignature(Map<String, String> map, String currency) throws Exception {
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do getSignature.");
 
 		String openId = map.get("openid");
@@ -67,7 +67,7 @@ public class PaymentServiceController {
 		paraMap.put("nonce_str", wxNonceStr);
 		paraMap.put("out_trade_no", tradeNumber);
 		paraMap.put("spbill_create_ip", "218.79.178.76");// TODO
-		paraMap.put("total_fee", "1");
+		paraMap.put("total_fee", currency);
 
 		paraMap.put("trade_type", "JSAPI");
 		paraMap.put("notify_url", "http://jilu-samplestudio.com/payment/callback");// TODO
@@ -117,7 +117,8 @@ public class PaymentServiceController {
 		payMap.put("nonceStr", wxNonceStr);
 		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + prepPayId);
-		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO HMACSHA256
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO
+																						// HMACSHA256
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
 		payMap.put("paypackage", "prepay_id=" + prepPayId);
@@ -174,12 +175,13 @@ public class PaymentServiceController {
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public Response<Map<String, String>> prePayService(@RequestParam(name = "code") String code) {
+	public Response<Map<String, String>> prePayService(@RequestParam(name = "code") String code,
+			@RequestParam(name = "currency") String currency) {
 		try {
 			LOGGER.begin().headerAction(MessageMethod.GET).info("start prepay service.");
 
 			Map<String, String> tokenResponseMap = getWxAccessToken(code);
-			Map<String, String> signResponseMap = getSignature(tokenResponseMap);
+			Map<String, String> signResponseMap = getSignature(tokenResponseMap, currency);
 			Map<String, String> orderResponseMap = postOrderRequest(signResponseMap);
 
 			return new Response<Map<String, String>>().setData(orderResponseMap).setMessage("success").success();

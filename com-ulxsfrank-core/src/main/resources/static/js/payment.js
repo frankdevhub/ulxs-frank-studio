@@ -60,3 +60,12 @@
                } 
      });   
   }
+  
+  function onWxinPayReady(){
+	  var currency = $('input[name="docVlGender"]:checked').attr("currency");
+      if(currency == undefined)
+    	  return;
+	  if(currency="other")
+		  currency = $('input[name="number"]').val();
+	  console.log('currency',currency);
+  }

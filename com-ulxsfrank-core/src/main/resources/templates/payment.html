@@ -1,13 +1,96 @@
 <html>
 <head>
+<meta charset="UTF-8"/>
+<title>充值中心</title>
+
+<link rel="stylesheet" type="text/css" href="css/amazeui.min.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
-<script src="/js/payment.js" type="text/javascript"></script>
-<title>Payment</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="/js/payment.js"></script>
 </head>
 <body>
-  <input type="button" value="�뽻Ǯ" name="pay_btn" id="pay_btn" onclick="do_payment();"/>
+<div class="pay">
+	<div class="tr_recharge">
+		<div class="tr_rechtext">
+			<p class="te_retit"><img src="/images/coin.png" alt="" />充值中心</p>
+		</div>
+		<form action="" class="am-form" id="doc-vld-msg">
+			<div class="tr_rechbox">
+				<div class="tr_rechhead">
+					<img src="/images/ys_head2.jpg" />
+					<p>商户帐号：
+						<a>雅晖(上海)高级时装设计工作室</a>
+					</p>
+					<div class="tr_rechheadcion">
+						<img src="/images/logo.png" alt="" />
+						<span>微信公众号：<span>记录样衣车间（ldw576180040c1）</span></span>
+					</div>
+				</div>
+				<div class="tr_rechli am-form-group">
+					<ul class="ui-choose am-form-group" id="uc_01">
+						<li>
+							<label class="am-radio-inline">
+									<input type="radio"  value="" name="docVlGender" required="true" data-validation-message="请选择一项充值额度"/> 1000￥
+								</label>
+						</li>
+						<li>
+							<label class="am-radio-inline">
+									<input type="radio"  currency="20" name="docVlGender" data-validation-message="请选择一项充值额度"/> 3000￥
+								</label>
+						</li>
 
+						<li>
+							<label class="am-radio-inline">
+									<input type="radio" currency="50" name="docVlGender" data-validation-message="请选择一项充值额度"/> 5000￥
+								</label>
+						</li>
+						<li>
+							<label class="am-radio-inline">
+									<input type="radio" currency="other" name="docVlGender" data-validation-message="请选择一项充值额度"/> 其他金额
+						    </label>
+						</li>
+					</ul>
+					
+				</div>
+				<div class="tr_rechoth am-form-group">
+					<span>其他金额：</span>
+					<input type="number" min="10" max="10000" value="10.00元" class="othbox" data-validation-message="充值金额范围：10-10000元" />
+					<!--<p>充值金额范围：10-10000元</p>-->
+				</div>
+				<div class="tr_rechcho am-form-group">
+					<span>充值方式：</span>
+					<label class="am-radio">
+							<input type="radio" checked="true" name="radio1" value="" data-am-ucheck="true" required="true" data-validation-message="请选择一种充值方式"/><img src="/images/wechatpay.png"/>
+				    </label>
+				</div>
+				<div class="tr_rechnum">
+					<span>应付金额：</span>
+					<p class="rechnum">0.00元</p>
+				</div>
+			</div>
+			<div class="tr_paybox">
+				<ul class="wx_contact">
+				 <li>
+					<input type="button" value="确认支付" class="tr_pay am-btn"  onclick="onWxinPayReady()"/>
+					<span>温馨提示：支付结果以微信账单为准，遇问题请拨打联系电话。</span>
+				 </li>
+				 <li>
+					 <div style="margin-left: 33%">
+					 <img src="/images/icon-weipay.png" />
+					 <span style="margin-left: 0%;margin-top:10%">微信支付、零钱通、理财通专线 </span>
+					 <p style="margin-left: 14%;margin-top:-5%">95017</p>
+					 </div>
+				 </li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>
 
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/amazeui.min.js"></script>
+<script type="text/javascript" src="/js/ui-choose.js"></script>
+<script type="text/javascript" src="/js/payment-page.js"></script>
 </body>
 </html>
