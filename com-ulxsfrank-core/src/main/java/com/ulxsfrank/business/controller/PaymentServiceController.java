@@ -51,7 +51,7 @@ public class PaymentServiceController {
 
 	private Logger LOGGER = LoggerFactory.getLogger(PaymentServiceController.class);
 
-	private Map<String, String> getSignature(Map<String, String> map, String currency) throws Exception {
+	private Map<String, String> getSignature(Map<String, String> map,String currency) throws Exception {
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do getSignature.");
 
 		String openId = map.get("openid");
@@ -60,14 +60,14 @@ public class PaymentServiceController {
 		String tradeNumber = Long.toString(new SnowFlakeIdWorker().nextId());
 		System.out.println(String.format("using nonce string:[%s]", wxNonceStr));
 		Map<String, String> paraMap = new HashMap<String, String>();
-		paraMap.put("appId", Constants.WX_APP_ID);
+		paraMap.put("appid", Constants.WX_APP_ID);
 		paraMap.put("openid", openId);
 		paraMap.put("body", "test-order");
 		paraMap.put("mch_id", Constants.WX_MCH_ID);
 		paraMap.put("nonce_str", wxNonceStr);
 		paraMap.put("out_trade_no", tradeNumber);
 		paraMap.put("spbill_create_ip", "218.79.178.76");// TODO
-		paraMap.put("total_fee", currency);
+		paraMap.put("total_fee", "2");
 
 		paraMap.put("trade_type", "JSAPI");
 		paraMap.put("notify_url", "http://jilu-samplestudio.com/payment/callback");// TODO
@@ -117,8 +117,7 @@ public class PaymentServiceController {
 		payMap.put("nonceStr", wxNonceStr);
 		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + prepPayId);
-		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO
-																						// HMACSHA256
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO HMACSHA256
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
 		payMap.put("paypackage", "prepay_id=" + prepPayId);
@@ -189,7 +188,7 @@ public class PaymentServiceController {
 			return new Response<Map<String, String>>().setData(null).setMessage(e.getMessage()).failed();
 		}
 	}
-
+	
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
 	public Response<Boolean> callBackPayService(HttpServletRequest request, HttpServletResponse response) {
 		try {

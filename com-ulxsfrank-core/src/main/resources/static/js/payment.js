@@ -8,11 +8,11 @@
    }
    
    var appId,timeStamp,nonceStr,prepackage,signType,paySign; 
-   function do_payment(){
+   function do_payment(currency){
     var code = getQueryString("code");
   	console.log("code",code);
   	if(code){
-  		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"";
+  		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"&currency="+currency+"";
   	  	$.post(url,function(result) {
     			appId = result.data.appId;
   				timeStamp = result.data.timeStamp;
@@ -63,9 +63,11 @@
   
   function onWxinPayReady(){
 	  var currency = $('input[name="docVlGender"]:checked').attr("currency");
+	  console.log('currency',currency);
       if(currency == undefined)
     	  return;
-	  if(currency="other")
+	  if(currency=="other")
 		  currency = $('input[name="number"]').val();
-	  console.log('currency',currency);
+	  
+	  do_payment(currency);
   }
