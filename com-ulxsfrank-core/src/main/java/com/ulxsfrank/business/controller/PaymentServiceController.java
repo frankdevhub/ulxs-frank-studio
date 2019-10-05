@@ -51,7 +51,8 @@ public class PaymentServiceController {
 
 	private Logger LOGGER = LoggerFactory.getLogger(PaymentServiceController.class);
 
-	private Map<String, String> getSignature(Map<String, String> map,String currency) throws Exception {
+	private Map<String, String> getSignature(HttpServletRequest request, Map<String, String> map, String currency)
+			throws Exception {
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do getSignature.");
 
 		String openId = map.get("openid");
@@ -66,7 +67,7 @@ public class PaymentServiceController {
 		paraMap.put("mch_id", Constants.WX_MCH_ID);
 		paraMap.put("nonce_str", wxNonceStr);
 		paraMap.put("out_trade_no", tradeNumber);
-		paraMap.put("spbill_create_ip", "218.79.178.76");// TODO
+		paraMap.put("spbill_create_ip", CommonInterceptor.getRealIp(request));// TODO
 		paraMap.put("total_fee", "2");
 
 		paraMap.put("trade_type", "JSAPI");
@@ -117,7 +118,8 @@ public class PaymentServiceController {
 		payMap.put("nonceStr", wxNonceStr);
 		payMap.put("signType", "MD5");
 		payMap.put("package", "prepay_id=" + prepPayId);
-		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO HMACSHA256
+		String paySign = WXPayUtil.generateSignature(payMap, Constants.WX_PATERNER_KEY);// TODO
+																						// HMACSHA256
 		System.out.println(String.format("generate sign as:[%s]", paySign));
 
 		payMap.put("paypackage", "prepay_id=" + prepPayId);
@@ -140,7 +142,7 @@ public class PaymentServiceController {
 		params.append("&");
 		params.append("code=" + code + "");
 		params.append("&");
-		params.append("grant_type=" + Constants.WX_GRANT_TYPE + "");
+		params.append("grant_type=" + Constants.WX_GRANT_TYPE_AUTH + "");
 
 		System.out.println(String.format("params string:[%s]", params.toString()));
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -175,12 +177,12 @@ public class PaymentServiceController {
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
 	public Response<Map<String, String>> prePayService(@RequestParam(name = "code") String code,
-			@RequestParam(name = "currency") String currency) {
+			@RequestParam(name = "currency") String currency, HttpServletRequest request) {
 		try {
 			LOGGER.begin().headerAction(MessageMethod.GET).info("start prepay service.");
 
 			Map<String, String> tokenResponseMap = getWxAccessToken(code);
-			Map<String, String> signResponseMap = getSignature(tokenResponseMap, currency);
+			Map<String, String> signResponseMap = getSignature(request, tokenResponseMap, currency);
 			Map<String, String> orderResponseMap = postOrderRequest(signResponseMap);
 
 			return new Response<Map<String, String>>().setData(orderResponseMap).setMessage("success").success();
@@ -188,7 +190,7 @@ public class PaymentServiceController {
 			return new Response<Map<String, String>>().setData(null).setMessage(e.getMessage()).failed();
 		}
 	}
-	
+
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
 	public Response<Boolean> callBackPayService(HttpServletRequest request, HttpServletResponse response) {
 		try {
