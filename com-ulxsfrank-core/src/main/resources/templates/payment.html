@@ -11,8 +11,8 @@
 </head>
 <body>
 <div class="pay">
-    <input type="hidden" id="access_token" value="${wx_userinfo.accessToken}"/>
-    <input type="hidden" id="openid" value="${wx_userinfo.openId}"/>
+    <input type="hidden" id="access_token" th:value="${wx_userinfo.accessToken}"/>
+    <input type="hidden" id="openid" th:value="${wx_userinfo.openId}"/>
 	<div class="tr_recharge">
 		<div class="tr_rechtext">
 			<p class="te_retit"><img src="/images/coin.png" alt="" />充值中心</p>
