@@ -136,13 +136,9 @@ public class PaymentServiceController {
 			throw new BusinessException("wx code should not be empty.");
 
 		StringBuffer params = new StringBuffer();
-		params.append("appid=" + Constants.WX_APP_ID + "");
-		params.append("&");
-		params.append("secret=" + Constants.WX_APP_SECRET + "");
-		params.append("&");
-		params.append("code=" + code + "");
-		params.append("&");
-		params.append("grant_type=" + Constants.WX_GRANT_TYPE_AUTH + "");
+		params.append("appid=" + Constants.WX_APP_ID + "").append("&").append("secret=" + Constants.WX_APP_SECRET + "")
+				.append("&").append("code=" + code + "").append("&")
+				.append("grant_type=" + Constants.WX_GRANT_TYPE_AUTH + "");
 
 		System.out.println(String.format("params string:[%s]", params.toString()));
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();

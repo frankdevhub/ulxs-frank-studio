@@ -15,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -47,20 +48,17 @@ public class UrlNavigationController {
 	}
 
 	@RequestMapping(value = "/payment", method = RequestMethod.GET)
-	public String toPaymentPage(HttpServletRequest request) throws ParseException, IOException, BusinessException {
+	public ModelAndView toPaymentPage(HttpServletRequest request)
+			throws ParseException, IOException, BusinessException {
 		LOGGER.begin().headerAction(MessageMethod.GET).info("navigate to payment service page.");
 
 		String code = request.getParameter("code");
 
 		LOGGER.begin().headerAction(MessageMethod.EVENT).info("navigate to payment page and get access token");
 		StringBuffer params = new StringBuffer();
-		params.append("appid=" + Constants.WX_APP_ID + "");
-		params.append("&");
-		params.append("code=" + code + "");
-		params.append("&");
-		params.append("secret=" + Constants.WX_APP_SECRET + "");
-		params.append("&");
-		params.append("grant_type=" + Constants.WX_GRANT_TYPE_AUTH + "");
+		params.append("appid=" + Constants.WX_APP_ID + "").append("&").append("code=" + code + "").append("&")
+				.append("secret=" + Constants.WX_APP_SECRET + "").append("&")
+				.append("grant_type=" + Constants.WX_GRANT_TYPE_AUTH + "");
 
 		System.out.println(String.format("params string:[%s]", params.toString()));
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -89,21 +87,20 @@ public class UrlNavigationController {
 
 		httpClient = HttpClientBuilder.create().build();
 		params = new StringBuffer();
-		params.append("access_token=" + accessToken + "");
-		params.append("&");
-		params.append("openid=" + openId + "");
-		params.append("&");
-		params.append("lang=zh_CN");
+		params.append("access_token=" + accessToken + "").append("&").append("openid=" + openId + "").append("&")
+				.append("lang=zh_CN");
 		HttpGet getUserInfo = new HttpGet("https://api.weixin.qq.com/sns/userinfo" + "?" + params);
 		response = httpClient.execute(getUserInfo);
-		
 
 		responseEntity = response.getEntity();
 		responseText = EntityUtils.toString(responseEntity);
 		System.out.println(String.format("response[user_info]:[%s]", responseText));
 
-		responseObject = JSON.parseObject(responseText);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/payment");
+		modelAndView.addObject("accessToken", accessToken);
+		modelAndView.addObject("openId", openId);
 
-		return "payment";
+		return modelAndView;
 	}
 }
