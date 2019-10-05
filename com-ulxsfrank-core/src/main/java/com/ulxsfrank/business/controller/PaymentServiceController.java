@@ -200,8 +200,10 @@ public class PaymentServiceController {
 			IOUtils.copy(is, writer, "UTF-8");
 			String xml = writer.toString();
 
+			System.out.println(String.format("[return_map]:[%s]", xml));
+
 			Map<String, String> notifyMap = WXPayUtil.xmlToMap(xml);
-			response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code></xml>");
+			// response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code></xml>");
 			is.close();
 			return new Response<Boolean>().setData(Boolean.TRUE).setMessage("success").success();
 
