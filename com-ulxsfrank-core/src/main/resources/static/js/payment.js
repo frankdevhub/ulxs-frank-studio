@@ -7,8 +7,8 @@
     console.log("openid",openid);
     
   	if(access_token!=undefined && openid!=undefined){
-  		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"&currency="+currency+"" +
-  				"&accessToken="+access_token+"&openid="+openid+"";
+  		var url = "http://jilu-samplestudio.com/payment/order?currency="+currency+"" +
+  				"&accessToken="+access_token+"&openId="+openid+"";
   	  	$.post(url,function(result) {
     			appId = result.data.appId;
   				timeStamp = result.data.timeStamp;
