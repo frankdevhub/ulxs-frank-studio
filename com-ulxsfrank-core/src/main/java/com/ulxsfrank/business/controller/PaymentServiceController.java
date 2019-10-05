@@ -128,57 +128,16 @@ public class PaymentServiceController {
 		return payMap;
 	}
 
-	private Map<String, String> getWxAccessToken(String code)
-			throws BusinessException, ClientProtocolException, IOException {
-
-		LOGGER.begin().headerAction(MessageMethod.EVENT).info("start do getWxAccessToken.");
-		if (StringUtils.isEmpty(code))
-			throw new BusinessException("wx code should not be empty.");
-
-		StringBuffer params = new StringBuffer();
-		params.append("appid=" + Constants.WX_APP_ID + "").append("&").append("secret=" + Constants.WX_APP_SECRET + "")
-				.append("&").append("code=" + code + "").append("&")
-				.append("grant_type=" + Constants.WX_GRANT_TYPE_AUTH + "");
-
-		System.out.println(String.format("params string:[%s]", params.toString()));
-		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet("https://api.weixin.qq.com/sns/oauth2/access_token" + "?" + params);
-		CloseableHttpResponse response;
-
-		Map<String, String> resMap = new HashMap<String, String>();
-		resMap.put("access_token", null);
-		resMap.put("openid", null);
-		resMap.put("code", code);
-
-		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).setConnectionRequestTimeout(5000)
-				.setSocketTimeout(5000).setRedirectsEnabled(true).build();
-		httpGet.setConfig(requestConfig);
-		response = httpClient.execute(httpGet);
-
-		HttpEntity responseEntity = response.getEntity();
-		String responseText = EntityUtils.toString(responseEntity);
-		System.out.println(String.format("response[get_access_token]:[%s]", responseText));
-
-		JSONObject responseObject = JSON.parseObject(responseText);
-		if ((null != responseObject.getString("access_token")) && (null != responseObject.getString("openid"))) {
-			resMap.put("access_token", responseObject.getString("access_token").toString());
-			resMap.put("openid", responseObject.getString("openid").toString());
-		} else {
-			String error = responseObject.getString("errmsg");
-			throw new BusinessException(error);
-		}
-
-		return resMap;
-	}
-
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public Response<Map<String, String>> prePayService(@RequestParam(name = "code") String code,
-			@RequestParam(name = "currency") String currency, HttpServletRequest request) {
+	public Response<Map<String, String>> prePayService(@RequestParam(name = "accessToken") String accessToken,
+			@RequestParam(name = "openId") String openId, @RequestParam(name = "currency") String currency,
+			HttpServletRequest request) {
 		try {
 			LOGGER.begin().headerAction(MessageMethod.GET).info("start prepay service.");
-
-			Map<String, String> tokenResponseMap = getWxAccessToken(code);
-			Map<String, String> signResponseMap = getSignature(request, tokenResponseMap, currency);
+			Map<String, String> signRequestMap = new HashMap<String, String>();
+			signRequestMap.put("access_token", accessToken);
+			signRequestMap.put("openid", openId);
+			Map<String, String> signResponseMap = getSignature(request, signRequestMap, currency);
 			Map<String, String> orderResponseMap = postOrderRequest(signResponseMap);
 
 			return new Response<Map<String, String>>().setData(orderResponseMap).setMessage("success").success();

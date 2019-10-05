@@ -13,6 +13,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +49,7 @@ public class UrlNavigationController {
 	}
 
 	@RequestMapping(value = "/payment", method = RequestMethod.GET)
-	public ModelAndView toPaymentPage(HttpServletRequest request)
+	public ModelAndView toPaymentPage(HttpServletRequest request, Model model)
 			throws ParseException, IOException, BusinessException {
 		LOGGER.begin().headerAction(MessageMethod.GET).info("navigate to payment service page.");
 
@@ -96,11 +97,9 @@ public class UrlNavigationController {
 		responseText = EntityUtils.toString(responseEntity);
 		System.out.println(String.format("response[user_info]:[%s]", responseText));
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/payment");
-		modelAndView.addObject("accessToken", accessToken);
-		modelAndView.addObject("openId", openId);
+		model.addAttribute("accessToken", accessToken);
+		model.addAttribute("openId", openId);
 
-		return modelAndView;
+		return new ModelAndView("/payment", "wx_userinfo", model);
 	}
 }

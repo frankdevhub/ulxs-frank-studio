@@ -1,18 +1,14 @@
- function getQueryString(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		var r = window.location.search.substr(1).match(reg);
-		if (r != null) {
-			return unescape(r[2]);
-		}
-		return null;
-   }
-   
+
    var appId,timeStamp,nonceStr,prepackage,signType,paySign; 
    function do_payment(currency){
-    var code = getQueryString("code");
-  	console.log("code",code);
-  	if(code){
-  		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"&currency="+currency+"";
+   var access_token = $("#access_token").val();
+   var openid = $("#openid").val();	   
+	console.log("access_token",access_token);
+    console.log("openid",openid);
+    
+  	if(access_token!=undefined && openid!=undefined){
+  		var url = "http://jilu-samplestudio.com/payment/order?code="+code+"&currency="+currency+"" +
+  				"&accessToken="+access_token+"&openid="+openid+"";
   	  	$.post(url,function(result) {
     			appId = result.data.appId;
   				timeStamp = result.data.timeStamp;
