@@ -1,0 +1,206 @@
+.login_input_panel {
+	margin-top: 5px
+}
+
+.login_input {
+	position: relative;
+	padding: 3px 0 3px 54px;
+	border: 1px solid #e7e7eb;
+	margin-top: -1px
+}
+
+.login_input input {
+	border: 0;
+	outline: 0;
+	padding: 11px 0;
+	vertical-align: middle;
+	width: 100%
+}
+
+.login_input_panel {
+	margin-top: 5px
+}
+
+.login_input {
+	position: relative;
+	padding: 3px 0 3px 54px;
+	border: 1px solid #e7e7eb;
+	margin-top: -1px
+}
+
+.login_input input {
+	border: 0;
+	outline: 0;
+	padding: 11px 0;
+	vertical-align: middle;
+	width: 100%
+}
+
+.login_input input {
+	height: 3em;
+}
+
+.weui-desktop-form__input,.weui-desktop-form__textarea {
+	display: table-cell;
+	width: 100%;
+	padding: 0.48571429em 10px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: rgba(0,0,0,0);
+	border: 1px solid #E4E8EB;
+	border-radius: 3px;
+}
+
+.icon_login {
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	margin-top: -11px;
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+	display: inline-block
+}
+
+.icon_login.un {
+	background: url(../img/email32.png) 0 0 no-repeat
+}
+
+.verifycode .weui-desktop-form__input-area {
+	width: 100px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.verifycode .weui-desktop-form__input-wrp {
+	display: block;
+}
+
+.verifycode .weui-desktop-form__input {
+	height: 50px;
+}
+
+.login_btn_panel {
+	margin-top: 20px;
+	margin-bottom: 10px
+}
+
+.btn_login {
+	text-decoration: none;
+	display: inline-block;
+	overflow: visible;
+	vertical-align: middle;
+	text-align: center;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-width: 2px;
+	border-style: solid;
+	cursor: pointer;
+	background-color: #44b549;
+	background-image: -moz-linear-gradient(top,#44b549 0,#44b549 100%);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#44b549),to(#44b549));
+	background-image: -webkit-linear-gradient(top,#44b549 0,#44b549 100%);
+	background-image: -o-linear-gradient(top,#44b549 0,#44b549 100%);
+	background-image: linear-gradient(to bottom,#44b549 0,#44b549 100%);
+	border-color: #44b549;
+	color: #fff;
+	height: 51px;
+	line-height: 33px;
+	*line-height: 31px;
+	width: 100%;
+	padding: 7px 0px;
+}
+
+.btn_login:hover {
+	text-decoration: none
+}
+
+.btn_login button {
+	text-decoration: none;
+	color: #fff
+}
+
+.btn_login:hover {
+	background-color: #2f9833;
+	background-image: -moz-linear-gradient(top,#2f9833 0,#2f9833 100%);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#2f9833),to(#2f9833));
+	background-image: -webkit-linear-gradient(top,#2f9833 0,#2f9833 100%);
+	background-image: -o-linear-gradient(top,#2f9833 0,#2f9833 100%);
+	background-image: linear-gradient(to bottom,#2f9833 0,#2f9833 100%);
+	border-color: #2f9833;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	color: #fff
+}
+
+.btn_login:hover button {
+	color: #fff
+}
+
+button.btn {
+	height: 32px;
+	line-height: 28px
+}
+
+.login_frame.quick_login {
+	width: 400px
+}
+
+.banner .inner .login_frame.quick_login {
+	padding: 0;
+	min-height: 300px
+}
+
+.login_frame {
+	padding: 25px 35px 20px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+	-moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+	background-color: #fff
+}
+
+.login_frame h3 {
+	font-size: 20px;
+	font-weight: 400;
+	font-style: normal
+}
+
+.login_frame {
+	width: 330px;
+	float: right;
+	margin-top: 25px;
+	padding: 36px 35px 40px
+}
+
+.banner .inner {
+	height: 460px;
+	position: relative
+}
+
+.banner .inner .login_frame {
+	width: 330px;
+	float: right;
+	margin-top: 25px;
+	padding: 36px 35px 40px
+}
+
+.weui-desktop-link {
+  font-size: 11px;
+  margin: 0 7px;
+  position: relative;
+  margin: 0 14px;
+}
+
+textarea::-webkit-input-placeholder,input::-webkit-input-placeholder {
+	font-size:14px;
+	color: #a3a3a3
+}
+
+.wxtip{background: rgba(12,12,4,0.382); text-align: center; position: fixed; left:0; top: 0; width: 100%; height: 100%; z-index: 998; display: none;}
+.wxtip-icon{width: 52px; height: 67px; background: url(../img/weixin-tip.png) no-repeat; display: block; position: absolute; right: 20px; top: 20px;}
+.wxtip-txt{margin-top: 107px; color: #fff; font-size: 16px; line-height: 1.5;}
