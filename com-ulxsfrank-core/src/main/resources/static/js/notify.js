@@ -7,7 +7,7 @@
   markCalss: "mailListHlignt", 
   zIndex: 1,
   autoClass: true, 
-  mailArr: ["qq.com","gmail.com","126.com","163.com","hotmail.com","yahoo.com","yahoo.com.cn","live.com","sohu.com","sina.com"], //邮件数组
+  mailArr: ["qq.com","gmail.com","126.com","163.com","hotmail.com","yahoo.com","yahoo.com.cn","live.com","sohu.com","sina.com"],
   textHint: false, 
   hintText: "",
   focusColor: "#333"
@@ -17,9 +17,9 @@
   
  
  if(settings.autoClass && $("#mailListAppendCss").size() === 0){
-  $('<style id="mailListAppendCss" type="text/css">.mailListBox{border:1px solid #369; background:#fff; font:12px/20px Arial;}.mailListDefault{padding:0 5px;cursor:pointer;white-space:nowrap;}.mailListFocus{padding:0 5px;cursor:pointer;white-space:nowrap;background:#369;color:white;}.mailListHlignt{color:red;}.mailListFocus .mailListHlignt{color:#fff;}</style>').appendTo($("head")); 
+  $('<style id="mailListAppendCss" type="text/css">.mailListBox{border:1px solid #369; background:#fff;  font:normal 100% Helvetica, Arial, sans-serif;}.mailListDefault{padding:0 5px;cursor:pointer;white-space:nowrap;}.mailListFocus{padding:0 5px;cursor:pointer;white-space:nowrap;background:#369;color:white;}.mailListHlignt{color:red;}.mailListFocus .mailListHlignt{color:#fff;}</style>').appendTo($("head")); 
  }
- var cb = settings.boxClass, cl = settings.listClass, cf = settings.focusClass, cm = settings.markCalss; //插件的class变量
+ var cb = settings.boxClass, cl = settings.listClass, cf = settings.focusClass, cm = settings.markCalss;
  var z = settings.zIndex, newArr = mailArr = settings.mailArr, hint = settings.textHint, text = settings.hintText, fc = settings.focusColor, bc = settings.blurColor;
  
  $.createHtml = function(str, arr, cur){
@@ -27,9 +27,9 @@
   if($.isArray(arr)){
   $.each(arr, function(i, n){
    if(i === cur){
-   mailHtml += '<div class="mailHover '+cf+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i]+'</div>'; 
+   mailHtml += '<div class="mailHover '+cf+'" id="mailList_'+i+'">span class="'+cm+'">'+str+'</span>@'+arr[i]+'<img class="notify_mail" src="img/gmail.png"/></div>'; 
    }else{
-   mailHtml += '<div class="mailHover '+cl+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i]+'</div>'; 
+   mailHtml += '<div class="mailHover '+cl+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i]+'<img class="notify_mail" src="img/gmail.png"/></div>'; 
    }
   });
   }
@@ -42,11 +42,11 @@
   if(i > 0){ 
    return; 
   }
-  var w = that.outerWidth(), h = that.outerHeight(); //获取当前对象（即文本框）的宽高
+  var w = that.outerWidth(), h = that.outerHeight();
   
   that.wrap('<span style="display:inline-block;position:relative;"></span>')
   .before('<div id="mailListBox_'+i+'" class="justForJs '+cb+'" style="min-width:'+w+'px;_width:'+w+'px;position:absolute;left:-6000px;top:'+h+'px;z-index:'+z+';"></div>');
-  var x = $("#mailListBox_" + i), liveValue; //列表框对象
+  var x = $("#mailListBox_" + i), liveValue; 
   that.focus(function(){
 
   $(this).css("color", fc).parent().css("z-index", z); 
@@ -120,7 +120,7 @@
    x.css("left", "-6000px"); 
     
   }); 
- 
+
   $(".mailHover").live("mouseover", function(){
    index = Number($(this).attr("id").split("_")[1]); 
    liveValue = $("#mailList_"+index).text();
