@@ -7,7 +7,15 @@
   markCalss: "mailListHlignt", 
   zIndex: 1,
   autoClass: true, 
-  mailArr: ["qq.com","gmail.com","126.com","163.com","hotmail.com","yahoo.com","yahoo.com.cn","live.com","sohu.com","sina.com"],
+  mailArr: [{domain:"tom.com",icon:"img/tom.png"}
+     ,{domain:"icloud.com",icon:"img/icloud.png"}
+     ,{domain:"gmail.com",icon:"img/gmail.png"}
+     ,{domain:"qq.com",icon:"img/qq.png"}
+     ,{domain:"aliyun.com",icon:"img/aliyun.png"}
+     ,{domain:"126.com",icon:"img/126.png"}
+	 ,{domain:"163.com",icon:"img/163.png"}
+	 ,{domain:"sohu.com",icon:"img/sohu.png"}
+	 ,{domain:"sina.com",icon:"img/sina.png"}],
   textHint: false, 
   hintText: "",
   focusColor: "#333"
@@ -17,7 +25,7 @@
   
  
  if(settings.autoClass && $("#mailListAppendCss").size() === 0){
-  $('<style id="mailListAppendCss" type="text/css">.mailListBox{border:1px solid #369; background:#fff;  font:normal 100% Helvetica, Arial, sans-serif;}.mailListDefault{padding:0 5px;cursor:pointer;white-space:nowrap;}.mailListFocus{padding:0 5px;cursor:pointer;white-space:nowrap;background:#369;color:white;}.mailListHlignt{color:red;}.mailListFocus .mailListHlignt{color:#fff;}</style>').appendTo($("head")); 
+  $('<style id="mailListAppendCss" type="text/css">.mailListBox{border:0px solid #369; background:#fff;  font:normal 100% Helvetica, Arial, sans-serif;}.mailListDefault{padding:0 5px;cursor:pointer;white-space:nowrap;}.mailListFocus{padding:0 5px;cursor:pointer;white-space:nowrap;background:#369;color:white;}.mailListHlignt{color:red;}.mailListFocus .mailListHlignt{color:#fff;}</style>').appendTo($("head")); 
  }
  var cb = settings.boxClass, cl = settings.listClass, cf = settings.focusClass, cm = settings.markCalss;
  var z = settings.zIndex, newArr = mailArr = settings.mailArr, hint = settings.textHint, text = settings.hintText, fc = settings.focusColor, bc = settings.blurColor;
@@ -27,12 +35,13 @@
   if($.isArray(arr)){
   $.each(arr, function(i, n){
    if(i === cur){
-   mailHtml += '<div class="mailHover '+cf+'" id="mailList_'+i+'">span class="'+cm+'">'+str+'</span>@'+arr[i]+'<img class="notify_mail" src="img/gmail.png"/></div>'; 
+   mailHtml += '<div class="mailHover '+cf+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i].domain+'<img class="notify_mail" src="'+arr[i].icon+'"/></div>'; 
    }else{
-   mailHtml += '<div class="mailHover '+cl+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i]+'<img class="notify_mail" src="img/gmail.png"/></div>'; 
+   mailHtml += '<div class="mailHover '+cl+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i].domain+'<img class="notify_mail" src="'+arr[i].icon+'"/></div>'; 
    }
   });
   }
+console.log(mailHtml);
   return mailHtml;
  };
 
