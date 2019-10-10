@@ -113,7 +113,33 @@ var code,accessToken,openId
                     document.getElementById("confirmY").addEventListener("click",function() {
                         final_pay_str = final_pay_str.split('.')[0];
                     	var payment = final_pay_str * 1000;
+                    	var accessToken = $("#accessToken").val();
+                    	var openId = $("openId").val();
                     	
+                    	var url = "http://www.jilu-samplestudio/payment/order?accessToken="+accessToken+"&openId="+openid+"&currency="+payment+";
+                	  	$.get(url,function(result) {
+                  				appId = result.appId;
+                				timeStamp = result.timeStamp;
+                				nonceStr = result.nonceStr;
+                				package = result.package;
+                				signType = result.signType;
+                				paySign = result.paySign;
+                				
+                				if (typeof WeixinJSBridge == "undefined") {
+                					if (document.addEventListener) {
+                						document.addEventListener('WeixinJSBridgeReady',
+                								onBridgeReady, false);
+                					} else if (document.attachEvent) {
+                						document.attachEvent('WeixinJSBridgeReady',
+                								onBridgeReady);
+                						document.attachEvent('onWeixinJSBridgeReady',
+                								onBridgeReady);
+                					}
+                				} else {
+                					onBridgeReady();
+                				}
+                			});
+        
                     });
                 }
         }
@@ -139,9 +165,3 @@ var code,accessToken,openId
            });   
         }
        
-  $(document).ready(function(){
-	  code = $(wx_userinfo.code);
-	  accessToken = $(wx_userinfo.accessToken);
-	  console.log(code);
-  });      
-        
