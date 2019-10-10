@@ -42,10 +42,9 @@ public class UrlNavigationController {
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String toIndexPage() {
-		{
-			LOGGER.begin().headerAction(MessageMethod.GET).info("navigate to payment index page.");
-			return "index";
-		}
+
+		LOGGER.begin().headerAction(MessageMethod.GET).info("navigate to payment index page.");
+		return "index";
 	}
 
 	@RequestMapping(value = "/payment", method = RequestMethod.GET)
