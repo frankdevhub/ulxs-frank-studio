@@ -116,7 +116,7 @@ var code,accessToken,openId
                     	var accessToken = $("#accessToken").val();
                     	var openId = $("#openId").val();
                     	
-                    	var url = "http://www.jilu-samplestudio/payment/order?accessToken="+accessToken+"&openId="+openId+"&currency="+payment+"";
+                    	var url = "/payment/order?accessToken="+accessToken+"&openId="+openId+"&currency="+payment+"";
                 	  	$.post(url,function(result) {
                   				appId = result.appId;
                 				timeStamp = result.timeStamp;
