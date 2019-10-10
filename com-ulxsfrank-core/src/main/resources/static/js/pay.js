@@ -115,15 +115,15 @@ var code,accessToken,openId
                     	var payment = final_pay_str * 1000;
                     	var accessToken = $("#accessToken").val();
                     	var openId = $("#openId").val();
-                    	
+                    	var appId,timeStamp,nonceStr,prepackage,signType,paySign;
                     	var url = "/payment/order?accessToken="+accessToken+"&openId="+openId+"&currency="+payment+"";
                 	  	$.post(url,function(result) {
                   				appId = result.appId;
-                				timeStamp = result.timeStamp;
-                				nonceStr = result.nonceStr;
-                				package = result.package;
-                				signType = result.signType;
-                				paySign = result.paySign;
+                				timeStamp = result.data.timeStamp;
+                				nonceStr = result.data.nonceStr;
+                				prepackage = result.data.package;
+                				signType = result.data.signType;
+                				paySign = result.data.paySign;
                 				
                 				if (typeof WeixinJSBridge == "undefined") {
                 					if (document.addEventListener) {
@@ -149,7 +149,7 @@ var code,accessToken,openId
         		  "appId":appId,  
                   "timeStamp":timeStamp, 
                   "nonceStr":nonceStr,    
-                  "package":package,     
+                  "package":prepackage,     
                   "signType":signType,       
                   "paySign":paySign 
                  }, 
