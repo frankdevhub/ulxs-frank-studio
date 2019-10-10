@@ -114,7 +114,7 @@ var code,accessToken,openId
                         final_pay_str = final_pay_str.split('.')[0];
                     	var payment = final_pay_str * 1000;
                     	var accessToken = $("#accessToken").val();
-                    	var openId = $("openId").val();
+                    	var openId = $("#openId").val();
                     	
                     	var url = "http://www.jilu-samplestudio/payment/order?accessToken="+accessToken+"&openId="+openid+"&currency="+payment+"";
                 	  	$.post(url,function(result) {
