@@ -2,7 +2,7 @@
 **@author ulxsfrankstudio
 *************************************************************************************************************************************/        
 var code,accessToken,openId
-
+var appId,timeStamp,nonceStr,prepackage,signType,paySign;
 (function($){
             $.fn.textFocus=function(v){
                 var range,len,v=v===undefined?0:parseInt(v);
@@ -104,6 +104,7 @@ var code,accessToken,openId
             }
              document.getElementById('payment_money').value = "支付金额：¥" + cny0000EBI.value.split(' ')[1];
         }
+        
         function paySubmit() {
                 var final_pay_str= document.pay_form.payment_money.value.split('：')[1].replace("¥","").replace(" ","").replace(" ","");
                 if(Number(final_pay_str) <= 0){
@@ -115,7 +116,7 @@ var code,accessToken,openId
                     	var payment = final_pay_str * 1000;
                     	var accessToken = $("#accessToken").val();
                     	var openId = $("#openId").val();
-                    	var appId,timeStamp,nonceStr,prepackage,signType,paySign;
+                 
                     	var url = "/payment/order?accessToken="+accessToken+"&openId="+openId+"&currency="+payment+"";
                 	  	$.post(url,function(result) {
                   				appId = result.data.appId;
