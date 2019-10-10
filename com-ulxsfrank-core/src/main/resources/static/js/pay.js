@@ -113,7 +113,7 @@ var appId,timeStamp,nonceStr,prepackage,signType,paySign;
                     confirms( "请核对金额：" + document.pay_form.payment_money.value.split('：')[1],'支付确认');
                     document.getElementById("confirmY").addEventListener("click",function() {
                         final_pay_str = final_pay_str.split('.')[0];
-                    	var payment = final_pay_str * 1000;
+                    	var payment = final_pay_str * 100;
                     	var accessToken = $("#accessToken").val();
                     	var openId = $("#openId").val();
                  
