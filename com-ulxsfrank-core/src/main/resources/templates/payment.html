@@ -21,7 +21,7 @@
             <table border="0" style="margin: auto">
               <tr>
                 <th><div style="text-align: center;" >
-                    <input  name="cny3500" readonly  id = "cny3500" value="¥ 3500.00" unselectable="on"  onfocus="this.blur()"  type="text"  class="weui-cny_in_input" onclick="cny3500Click()"/>
+                    <input  name="cny3500" readonly="true"  id = "cny3500" value="¥ 3500.00" unselectable="on"  onfocus="this.blur()"  type="text"  class="weui-cny_in_input" onclick="cny3500Click()"/>
                     </div>
                 </th>
               </tr>
@@ -38,7 +38,7 @@
             <table border="0" style="margin: auto">
               <tr>
                     <th>
-                        <input  name="cny0000" readonly   id = "cny0000" value="¥ _______" type="tel"  class="weui-cny_out_input" onclick="cny0000Click()" onkeypress="return IsNum(event)"/>
+                        <input  name="cny0000" readonly="true"   id = "cny0000" value="¥ _______" type="tel"  class="weui-cny_out_input" onclick="cny0000Click()" onkeypress="return IsNum(event)"/>
                     </th>
               </tr>
             </table>
@@ -53,13 +53,15 @@
          <li class="odd">
          <table border="0" style="margin: auto; width:89.1%;" >
               <tr>
-                <th><div style="text-align: center;">
+                <th>
+                   <div style="text-align: center;">
                    <form autocomplete="off" class="pay_form"  name = "pay_form">
-                       <input  name="payment_money" readonly  unselectable="on" onfocus="this.blur()"  id = "payment_money" value="支付金额：¥3500.00"  class="weui-pay-form__input" />
+                       <input  name="payment_money" readonly="true"  unselectable="on" onfocus="this.blur()"  id = "payment_money" value="支付金额：¥3500.00"  class="weui-pay-form__input" />
                        <div class="login_btn_panel">
                         <a title="确认付款" class="btn_login" onclick="paySubmit()">确认付款</a>
                        </div>
                    </form>
+                   </div>
                 </th>
               </tr>
             </table>
@@ -68,7 +70,7 @@
      </ul>
     </div>
  </body>
-  <script src="js/jquery.js"></script>
+<script src="js/jquery.js" type="text/javascript"></script>
 <script src="js/popup.js" type="text/javascript"></script>
-
+<script src="js/pay.js" type="text/javascript"></script>
 </html>

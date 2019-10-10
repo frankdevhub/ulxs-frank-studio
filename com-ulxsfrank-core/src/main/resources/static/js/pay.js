@@ -1,6 +1,8 @@
 /************************************************************************************************************************************
 **@author ulxsfrankstudio
 *************************************************************************************************************************************/        
+var code,accessToken,openId
+
 (function($){
             $.fn.textFocus=function(v){
                 var range,len,v=v===undefined?0:parseInt(v);
@@ -109,8 +111,37 @@
                 }else {
                     confirms( "请核对金额：" + document.pay_form.payment_money.value.split('：')[1],'支付确认');
                     document.getElementById("confirmY").addEventListener("click",function() {
-                        alert("todo 添加跳转链接 进入支付流程");
-                        //todo 添加跳转链接 进入支付流程
+                        final_pay_str = final_pay_str.split('.')[0];
+                    	var payment = final_pay_str * 1000;
+                    	
                     });
                 }
         }
+
+        function onBridgeReady(){
+        	  WeixinJSBridge.invoke( 'getBrandWCPayRequest', {
+        		  "appId":appId,  
+                  "timeStamp":timeStamp, 
+                  "nonceStr":nonceStr,    
+                  "package":package,     
+                  "signType":signType,       
+                  "paySign":paySign 
+                 }, 
+                 function(res){      
+              	   if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                         console.log('支付成功');
+                     }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                  	   console.log('支付取消');
+                     }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+                  	   console.log('支付失败');
+                         WeixinJSBridge.call('closeWindow');
+                     } 
+           });   
+        }
+       
+  $(document).ready(function(){
+	  code = $(wx_userinfo.code);
+	  accessToken = $(wx_userinfo.accessToken);
+	  console.log(code);
+  });      
+        
