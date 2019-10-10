@@ -1,4 +1,8 @@
- function getQueryString(name) {
+/************************************************************************************************************************************
+**@author ulxsfrankstudio
+*************************************************************************************************************************************/
+ 
+function getQueryString(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 		var r = window.location.search.substr(1).match(reg);
 		if (r != null) {
@@ -17,19 +21,12 @@
 }
 
 
-/**
- * 消息警告框
- * @param {提示对话框上显示的内容} message
- * @param {提示对话框上显示的标题} title
- * @param {提示对话框上按钮显示的内容} buttonCapture
- */
 var notice = function(message,title,buttonCapture) {
-	//判断页面是否存在弹窗层dom,有的话移除重新加载
 	var isDom = document.getElementById("popup-backdrop")
 	if(isDom) {
 		document.body.removeChild(isDom);
 	}
-	//判断页面是否存在弹窗遮罩层,有的话移除重新加载
+
 	var isDom_back = document.getElementById("noticePopup");
 	if(isDom_back) {
 		document.body.removeChild(isDom_back);
@@ -38,12 +35,12 @@ var notice = function(message,title,buttonCapture) {
 	message == null ? message="nulll" : message,
 	title == null ? title="" : title,
 	buttonCapture == null ? buttonCapture="确定" : buttonCapture;
-	//遮罩层
+
 	var popupBackdrop = document.createElement("div");
 	popupBackdrop.setAttribute("class","popup-backdrop fadeIn");
 	popupBackdrop.setAttribute("id","popup-backdrop");
 	popupBackdrop.setAttribute("style","display: none;")
-	//弹窗层
+
 	var noticePopup = document.createElement("div");
 	noticePopup.setAttribute("id","noticePopup");
 	noticePopup.setAttribute("class","own-popup");
@@ -60,18 +57,14 @@ var notice = function(message,title,buttonCapture) {
 }
 
 
-/**
- * 消息确认框
- * @param {确认对话框上显示的内容} message
- * @param {确认对话框上显示的标题} title
- */
+
 var confirms = function(message,title) {
-	//判断页面是否存在弹窗层dom,有的话移除重新加载
+
 	var isDom = document.getElementById("confirmPopup")
 	if(isDom) {
 		document.body.removeChild(isDom);
 	}
-	//判断页面是否存在弹窗遮罩层,有的话移除重新加载
+	
 	var isDom_back = document.getElementById("popup-backdrop");
 	if(isDom_back) {
 		document.body.removeChild(isDom_back);
@@ -79,12 +72,12 @@ var confirms = function(message,title) {
 	
 	message == null ? message="nulll" : message,
 	title == null ? title="" : title;
-	//遮罩层
+
 	var popupBackdrop = document.createElement("div");
 	popupBackdrop.setAttribute("class","popup-backdrop fadeIn");
 	popupBackdrop.setAttribute("id","popup-backdrop");
 	popupBackdrop.setAttribute("style","display: none;")
-	//弹窗层
+
 	var confirmPopup = document.createElement("div");
 	confirmPopup.setAttribute("id","confirmPopup");
 	confirmPopup.setAttribute("class","own-popup");
@@ -105,19 +98,14 @@ var confirms = function(message,title) {
 	document.getElementById("confirmPopup").style.display = "flex";
 }
 
-/**
- * 提示框
- * @param {输入对话框上显示的内容} message
- * @param {输入对话框上显示的标题} title
- * @param {输入对话框上编辑框显示的提示文字} tip
- */
+
 var prompts = function(message,title,tip) {
-	//判断页面是否存在弹窗层dom,有的话移除重新加载
+
 	var isDom = document.getElementById("dialoguePopup")
 	if(isDom) {
 		document.body.removeChild(isDom);
 	}
-	//判断页面是否存在弹窗遮罩层,有的话移除重新加载
+
 	var isDom_back = document.getElementById("popup-backdrop");
 	if(isDom_back) {
 		document.body.removeChild(isDom_back);
@@ -126,12 +114,12 @@ var prompts = function(message,title,tip) {
 	message == null ? message="nulll" : message,
 	title == null ? title="" : title,
 	tip == null ? tip="" : tip;
-	//遮罩层
+
 	var popupBackdrop = document.createElement("div");
 	popupBackdrop.setAttribute("class","popup-backdrop fadeIn");
 	popupBackdrop.setAttribute("id","popup-backdrop");
 	popupBackdrop.setAttribute("style","display: none;")
-	//弹窗层
+	
 	var promptPopup = document.createElement("div");
 	promptPopup.setAttribute("id","dialoguePopup");
 	promptPopup.setAttribute("class","own-popup");
@@ -148,22 +136,11 @@ var prompts = function(message,title,tip) {
 }
 
 
-
-
-
-
-
-/**
- * 关闭 消息警告框
- */
 function noticeHide() {
 	document.getElementById("popup-backdrop").style.display = "none";
 	document.getElementById("noticePopup").style.display = "none";
 }
 
-/**
- * 关闭 消息确认框
- */
 function isConfirm_confirm(text) {
 	document.getElementById("popup-backdrop").style.display = "none";
 	document.getElementById("confirmPopup").style.display = "none";

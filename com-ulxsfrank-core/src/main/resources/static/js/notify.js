@@ -1,147 +1,81 @@
+/************************************************************************************************************************************
+**@author ulxsfrankstudio
+*************************************************************************************************************************************/
 (function($){
- $.fn.mailAutoComplete = function(options){
- var defaults = {
-  boxClass: "mailListBox", 
-  listClass: "mailListDefault",
-  focusClass: "mailListFocus",
-  markCalss: "mailListHlignt", 
-  zIndex: 1,
-  autoClass: true, 
-  mailArr: [{domain:"tom.com",icon:"img/tom.png"}
-     ,{domain:"icloud.com",icon:"img/icloud.png"}
-     ,{domain:"gmail.com",icon:"img/gmail.png"}
-     ,{domain:"qq.com",icon:"img/qq.png"}
-     ,{domain:"aliyun.com",icon:"img/aliyun.png"}
-     ,{domain:"126.com",icon:"img/126.png"}
-	 ,{domain:"163.com",icon:"img/163.png"}
-	 ,{domain:"sohu.com",icon:"img/sohu.png"}
-	 ,{domain:"sina.com",icon:"img/sina.png"}],
-  textHint: false, 
-  hintText: "",
-  focusColor: "#333"
-  //blurColor: "#999"
- };
- var settings = $.extend({}, defaults, options || {});
-  
- 
- if(settings.autoClass && $("#mailListAppendCss").size() === 0){
-  $('<style id="mailListAppendCss" type="text/css">.mailListBox{border:0px solid #369; background:#fff;  font:normal 100% Helvetica, Arial, sans-serif;}.mailListDefault{padding:0 5px;cursor:pointer;white-space:nowrap;}.mailListFocus{padding:0 5px;cursor:pointer;white-space:nowrap;background:#369;color:white;}.mailListHlignt{color:red;}.mailListFocus .mailListHlignt{color:#fff;}</style>').appendTo($("head")); 
- }
- var cb = settings.boxClass, cl = settings.listClass, cf = settings.focusClass, cm = settings.markCalss;
- var z = settings.zIndex, newArr = mailArr = settings.mailArr, hint = settings.textHint, text = settings.hintText, fc = settings.focusColor, bc = settings.blurColor;
- 
- $.createHtml = function(str, arr, cur){
-  var mailHtml = "";
-  if($.isArray(arr)){
-  $.each(arr, function(i, n){
-   if(i === cur){
-   mailHtml += '<div class="mailHover '+cf+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i].domain+'<img class="notify_mail" src="'+arr[i].icon+'"/></div>'; 
-   }else{
-   mailHtml += '<div class="mailHover '+cl+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i].domain+'<img class="notify_mail" src="'+arr[i].icon+'"/></div>'; 
-   }
-  });
-  }
-console.log(mailHtml);
-  return mailHtml;
- };
+	$.fn.extend({
+		"changeTips":function(value){
+			value = $.extend({
+				divTip:""
+			},value)
+			var $this = $(this);
+			$(document).click(function(event){
+				if(document.getElementById("btn_login").style.display != "block" && $(event.target).attr("email") != null){
+					if($(event.target).attr("class") == value.divTip || $(event.target).is("li")){
+						$this.val( $(event.target).text());
+						blus();
+						emailSubmit();
+					}
+				}else{
+					blus();
+				}
+			})
+			
+			function blus(){
+				document.getElementById("btn_login").style.display="block";
+				$(value.divTip).hide();
+			}
+			function valChange(){
+				document.getElementById("btn_login").style.display="none";
+				document.getElementById('login_input_div').style.setProperty('border' ,"1px solid #44b549");
+				var tex = $this.val();
+				var fronts = "";
+				var af = /@/;
+				var regMail = new RegExp(tex.substring(tex.indexOf("@")));
 
- var index = -1, s;
- $(this).each(function(){
-  var that = $(this), i = $(".justForJs").size(); 
-  if(i > 0){ 
-   return; 
-  }
-  var w = that.outerWidth(), h = that.outerHeight();
-  
-  that.wrap('<span style="display:inline-block;position:relative;"></span>')
-  .before('<div id="mailListBox_'+i+'" class="justForJs '+cb+'" style="min-width:'+w+'px;_width:'+w+'px;position:absolute;left:-6000px;top:'+h+'px;z-index:'+z+';"></div>');
-  var x = $("#mailListBox_" + i), liveValue; 
-  that.focus(function(){
+				if($this.val()==""){
+					blus();
+				}else{
+					$(value.divTip).
+					show().
+					children().
+					each(function(index) {
+						var valAttr = $(this).attr("email");
+						if(index==1){$(this).text(tex).addClass("active").siblings().removeClass();}
+						
+						if(index>1){
+						
+							if(af.test(tex)){
+							
+								fronts = tex.substring(tex.indexOf("@"),0);
+								$(this).text(fronts+valAttr);
+								
+								if(regMail.test($(this).attr("email"))){
+									$(this).show();
+								}else{
+									if(index>1){
+										$(this).hide();
+									}
+								}
 
-  $(this).css("color", fc).parent().css("z-index", z); 
+							}
+							else{
+								$(this).text(tex+valAttr);
+							}
+						}
+	                })
+				}
+			}
+			
+			if($.browser.msie){
+				$(this).bind("propertychange",function(){
+					valChange();
+				})
+			}else{
+				$(this).bind("input",function(){
+					valChange();
+				})
+			}
 
-  if(hint && text){
-   var focus_v = $.trim($(this).val());
-   if(focus_v === text){
-   $(this).val("");
-   }
-  }
-  
-  $(this).keyup(function(e){
-   s = v = $.trim($(this).val()); 
-   if(/@/.test(v)){
-   s = v.replace(/@.*/, "");
-   }
-   if(v.length > 0){
-   
-   if(e.keyCode === 38){
-    
-    if(index <= 0){
-    index = newArr.length; 
-    }
-    index--;
-   }else if(e.keyCode === 40){
-    
-    if(index >= newArr.length - 1){
-    index = -1;
-    }
-    index++;
-   }else if(e.keyCode === 13){
-   
-    if(index > -1 && index < newArr.length){
-   
-    $(this).val($("#mailList_"+index).text()); 
-    }
-   }else{
-    if(/@/.test(v)){
-    index = -1;
-   
-    var site = v.replace(/.*@/, "");
-    newArr = $.map(mailArr, function(n){
-     var reg = new RegExp(site); 
-     if(reg.test(n)){
-     return n; 
-     }
-    });
-    }else{
-    newArr = mailArr;
-    }
-   }
-   x.html($.createHtml(s, newArr, index)).css("left", 0);
-   if(e.keyCode === 13){
-   
-    if(index > -1 && index < newArr.length){
-    
-    x.css("left", "-6000px"); 
-    }
-   }
-   }else{
-   x.css("left", "-6000px"); 
-   }
-  }).blur(function(){
-   if(hint && text){
-   var blur_v = $.trim($(this).val());
-   if(blur_v === ""){
-    $(this).val(text);
-   }
-   }
-   $(this).css("color", bc).unbind("keyup").parent().css("z-index",0);
-   x.css("left", "-6000px"); 
-    
-  }); 
-
-  $(".mailHover").live("mouseover", function(){
-   index = Number($(this).attr("id").split("_")[1]); 
-   liveValue = $("#mailList_"+index).text();
-   x.children("." + cf).removeClass(cf).addClass(cl);
-   $(this).addClass(cf).removeClass(cl);
-  });
-  });
- 
-  x.bind("mousedown", function(){
-  that.val(liveValue); 
-  });
- });
- };
-  
-})(jQuery);
+		}
+	})	
+})(jQuery)
