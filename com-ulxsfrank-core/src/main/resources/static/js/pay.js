@@ -118,7 +118,7 @@ var code,accessToken,openId
                     	var appId,timeStamp,nonceStr,prepackage,signType,paySign;
                     	var url = "/payment/order?accessToken="+accessToken+"&openId="+openId+"&currency="+payment+"";
                 	  	$.post(url,function(result) {
-                  				appId = result.appId;
+                  				appId = result.data.appId;
                 				timeStamp = result.data.timeStamp;
                 				nonceStr = result.data.nonceStr;
                 				prepackage = result.data.package;
