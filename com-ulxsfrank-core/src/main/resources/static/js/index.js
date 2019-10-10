@@ -23,7 +23,7 @@ $(function(){
             if(chkEmail(document.login_form.account.value)){//邮箱符合条件
                 confirms(document.login_form.account.value,'邮箱确认');
                 document.getElementById("confirmY").addEventListener("click",function() {
-                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdb1109fa181ce203&redirect_uri=http%3A%2F%2Fjilu-samplestudio.com%3Fpayment.html&response_type=code&scope=snsapi_base#wechat_redirect";
+                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdb1109fa181ce203&redirect_uri=http%3A%2F%2Fjilu-samplestudio.com%2Fpayment.html&response_type=code&scope=snsapi_base#wechat_redirect";
                 });
             }
             else {
