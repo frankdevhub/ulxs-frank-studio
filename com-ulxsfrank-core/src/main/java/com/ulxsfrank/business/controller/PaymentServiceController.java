@@ -61,7 +61,7 @@ public class PaymentServiceController {
 		paraMap.put("nonce_str", wxNonceStr);
 		paraMap.put("out_trade_no", tradeNumber);
 		paraMap.put("spbill_create_ip", CommonInterceptor.getRealIp(request));// TODO
-		paraMap.put("total_fee", "2");
+		paraMap.put("total_fee", currency);
 
 		paraMap.put("trade_type", "JSAPI");
 		paraMap.put("notify_url", "http://jilu-samplestudio.com/payment/callback");// TODO
